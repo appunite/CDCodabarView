@@ -45,7 +45,7 @@ import Foundation
 
 private struct Constants {
     static let minimumLength = 3
-    static let maximumLength = 16
+    static let maximumLength = 128
     
      static let barcodeEncoding: [Character: [Int]] = [
         "0": [1, 0, 1, 0, 1, 0, 0, 1, 1],
