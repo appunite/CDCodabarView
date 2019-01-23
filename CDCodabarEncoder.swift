@@ -76,8 +76,8 @@ public struct CDCodabarEncoder {
 
     public init?(code: String) {
         // validate width
-        guard code.characters.count >= Constants.minimumLength
-            && code.characters.count <= Constants.maximumLength else {
+        guard code.count >= Constants.minimumLength
+            && code.count <= Constants.maximumLength else {
             return nil
         }
 
@@ -85,17 +85,17 @@ public struct CDCodabarEncoder {
         let uppercaseCode = code.uppercased()
 
         // validate start character
-        guard let startChar = uppercaseCode.characters.first, startChar >= "A" && startChar <= "D" else {
+        guard let startChar = uppercaseCode.first, startChar >= "A" && startChar <= "D" else {
             return nil
         }
 
         // validate stop character
-        guard let stopChar = uppercaseCode.characters.last, stopChar >= "A" && stopChar <= "D" else {
+        guard let stopChar = uppercaseCode.last, stopChar >= "A" && stopChar <= "D" else {
             return nil
         }
 
         // validate characters
-        let invalidChar = uppercaseCode.characters.first { !Constants.barcodeEncoding.keys.contains($0) }
+        let invalidChar = uppercaseCode.first { !Constants.barcodeEncoding.keys.contains($0) }
         if invalidChar != nil {
             return nil
         }
@@ -109,9 +109,9 @@ public struct CDCodabarEncoder {
     ///
     /// - Returns: Returns array of integer representing bits
     public func sequence() -> [Int] {
-        return code.characters
+        return code
             .map { Constants.barcodeEncoding[ $0 ]!}
             .joined(separator: [0])
-            .flatMap { $0 }
+            .compactMap { $0 }
     }
 }
